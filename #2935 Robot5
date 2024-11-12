@@ -1,0 +1,70 @@
+#include <fstream>
+std::ifstream fin("robot5.in");
+std::ofstream fout("robot5.out");
+int main()
+{
+    int cer;
+    fin>>cer;
+    if(cer==1)
+    {
+        int n,w,x,p;
+        fin>>n>>w>>x>>p;
+        if(w<p-1)
+        {
+            fout<<w;
+            return 0;
+        }
+        else if(p>=x+1)
+        {
+            fout<<w+x;
+        }
+        else if(w<=n-1)
+        {
+            fout<<p-1+w;
+        }
+        else
+        {
+            fout<<p-1+((x-(p-1))/n+1)*n+(w-n)+(x-(p-1))%n;
+        }
+    }
+    else 
+    {
+        int maxi=0,actp;
+        int n,w,x;
+        fin>>n>>w>>x;
+        for(int p=1;p<=n;p++)
+        {
+            if(w<p-1)
+            {
+                if(maxi<w)
+                {
+                    maxi=w;
+                    actp=p;
+                }
+            }
+            else if(p>=x+1)
+            {
+                if(maxi<w+x){
+                    maxi=w+x;
+                    actp=p;
+                }
+            }
+            else if(w<=n-1)
+            {
+                if(maxi<w+p-1){
+                    maxi=w+p-1;
+                    actp=p;
+                }
+            }
+            else
+            {
+                if(maxi<p-1+((x-(p-1))/n+1)*n+(w-n)+(x-(p-1))%n){
+                    maxi=p-1+((x-(p-1))/n+1)*n+(w-n)+(x-(p-1))%n;
+                    actp=p;
+                }
+            }
+        }
+        fout<<maxi<<' '<<actp;
+    }
+    return 0;
+}
